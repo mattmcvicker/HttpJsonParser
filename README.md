@@ -4,4 +4,4 @@ Very basic app that uses HTTP Get request to receive JSON from URL. Parses the J
 information. Shows Username and profilepicture with picasso.
 
 
-<img src="./CAPTURE.PNG">
+<img src="./Capture.PNG">
