@@ -12,6 +12,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     lateinit var apiManager: ApiManager
+    lateinit var holdOldValue: User
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,7 +22,6 @@ class MainActivity : AppCompatActivity() {
 
         btnFetchJSON.setOnClickListener {
             fetchWithVolley()
-            fetchDataWithGson()
         }
 
         changeUserInfo()
@@ -40,30 +40,12 @@ class MainActivity : AppCompatActivity() {
     private fun fetchWithVolley() {
         apiManager.getUser ({ User ->
             Log.i("hello", User.firstName)
+            userName.text = User.username
+            Picasso.get().load(User.profilePicURL).into(profilePic);
         },
             {
                 Toast.makeText(this, "Error",Toast.LENGTH_SHORT).show()
             })
     }
 
-    private fun fetchDataWithGson() {
-        val gson = Gson()
-        val user: User = gson.fromJson(userNameOverviewJSONString, User::class.java)
-        val first = user.firstName
-        userName.text = user.username
-        Picasso.get().load(user.profilePicURL).into(profilePic);
-
-    }
-
-
-    val userNameOverviewJSONString = """
-        {
-          "username": "whomustnotbenamed",
-          "firstName": "Tom",
-          "lastName": "Riddle",
-          "hasNose": false,
-          "platform": 9.75,
-          "profilePicURL": "https://picsum.photos/seed/voldemort/256"
-        }
-    """.trimIndent()
 }
